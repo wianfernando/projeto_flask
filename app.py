@@ -32,7 +32,7 @@ def listar_alunos():
         (15, 'Felipe Rodrigues', 25, 'Teresina'),
         (16, 'Camila Santos', 19, 'Teresina'),
         (17, 'Gustavo Martins', 23, 'Teresina'),
-        (18, 'Amanda Costa', 22, 'Teresinna'),
+        (18, 'Amanda Costa', 22, 'Teresina'),
         (19, 'Thiago Oliveira', 20, 'Teresina'),
         (20, 'Isabela Almeida', 24, 'Teresina'),
         (21, 'Diego Carvalho', 21, 'Teresina'),
