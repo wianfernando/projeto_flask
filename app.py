@@ -40,7 +40,7 @@ def listar_turma():
 def listar_curso():
     dao = CursoDAO()
     lista = dao.listar()
-    return render_template('turma/lista_turma.html', lista=lista)
+    return render_template('curso/lista_curso.html', lista=lista)
 
 
 
