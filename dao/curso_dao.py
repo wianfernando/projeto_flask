@@ -7,14 +7,12 @@ class CursoDAO:
     def listar(self):
         conn = get_connection()
         cursor = conn.cursor()
-
         cursor.execute(self.sqlSelect)
         lista = cursor.fetchall()
-
         cursor.close()
         conn.close()
-
         return lista
+
 
     def salvar(self, id, curso, duracao):
         conn = get_connection()
