@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-12">
-        <form action="/curso/salvar/" method="POST">
+        <form action="{{ url_for('salvar_curso', id=curso[0]) if curso else url_for('salvar_curso') }}" method="POST">
 
             <div class="mb-3">
                 <label for="nome" class="form-label">Curso</label>
