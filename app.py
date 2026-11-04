@@ -75,18 +75,39 @@ def form_professor():
 
 
 @app.route('/professor/salvar/', methods=['POST'])
-def salvar_professor():
+@app.route('/professor/salvar/<int:id>', methods=['POST'])
+def salvar_professor(id=None):
     nome = request.form['nome']
     disciplina = request.form['disciplina']
 
     dao = ProfessorDAO()
-    result = dao.salvar(None, nome, disciplina)
+    result = dao.salvar(id, nome, disciplina)
 
     if result["status"] == "ok":
         flash("Professor salvo com sucesso!", "success")
     else:
         flash(result["mensagem"], "danger")
 
+    return redirect('/professor')
+
+
+@app.route('/professor/editar/<int:id>')
+def editar_professor(id):
+    dao = ProfessorDAO()
+    professor = dao.buscar_por_id(id)
+    return render_template('professor/form_professor.html', professor=professor)
+
+
+@app.route('/professor/remover/<int:id>')
+def remover_professor(id):
+    dao = ProfessorDAO()
+    resultado = dao.remover(id)
+
+    if resultado["status"] == "ok":
+        flash("Professor removido com sucesso!", "success")
+    else:
+        flash(resultado["mensagem"], "danger")
+    
     return redirect('/professor')
 
 
@@ -148,19 +169,40 @@ def form_curso():
 
 
 @app.route('/curso/salvar/', methods=['POST'])
-def salvar_curso():
+@app.route('/curso/salvar/<int:id>', methods=['POST'])
+def salvar_curso(id=None):
     nome = request.form['nome']
     duracao = request.form['duracao']
-
     dao = CursoDAO()
-    result = dao.salvar(None, nome, duracao)
-
+    result = dao.salvar(id, nome, duracao)
+    
     if result["status"] == "ok":
         flash("Curso salvo com sucesso!", "success")
     else:
         flash(result["mensagem"], "danger")
 
     return redirect('/curso')
+
+
+@app.route('/curso/editar/<int:id>')
+def editar_curso(id):
+    dao = CursoDAO()
+    curso = dao.buscar_por_id(id)
+    return render_template('curso/form_curso.html', curso=curso)
+
+
+@app.route('/curso/remover/<int:id>')
+def remover_curso(id):
+    dao = CursoDAO()
+    resultado = dao.remover(id)
+
+    if resultado["status"] == "ok":
+        flash("Curso removido com sucesso!", "success")
+    else:
+        flash(resultado["mensagem"], "danger")
+
+    return redirect('/curso')
+
 
 
 @app.route('/contato')
