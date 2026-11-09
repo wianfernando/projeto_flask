@@ -279,8 +279,8 @@ def editar_matricula(id):
     if matricula is None:
         flash("Matrícula não encontrada!", "danger")
         return redirect('/matricula')
-        alunos = dao.listar_alunos()
-        turmas = dao.listar_turmas()
+    alunos = dao.listar_alunos()
+    turmas = dao.listar_turmas()
     return render_template('matricula/form.html',matricula=matricula,alunos=alunos,turmas=turmas)
 
 @app.route('/matricula/remover/<int:id>')
