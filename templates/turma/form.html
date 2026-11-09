@@ -7,7 +7,7 @@
         <form action="{{ url_for('salvar_turma', id=turma[0]) if turma else url_for('salvar_turma') }}" method="POST">
             <div class="mb-3">
                 <label for="semestre" class="form-label">Semestre</label>
-                <input type="text" class="form-control" id="semestre" name="semestre" required>
+                <input type="text" class="form-control" id="semestre" name="semestre" value="{{ turma[1] if turma else '' }}" required>
             </div>
 
             <div class="mb-3">
