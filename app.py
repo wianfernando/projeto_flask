@@ -3,6 +3,7 @@ from dao.aluno_dao import AlunoDAO
 from dao.professor_dao import ProfessorDAO
 from dao.turma_dao import TurmaDAO
 from dao.curso_dao import CursoDAO
+from dao.matricula_dao import MatriculaDAO
 
 app = Flask(__name__)
 app.secret_key = "rato123"  # Chave secreta para sessões e flash messages
@@ -241,6 +242,54 @@ def remover_curso(id):
 
     return redirect('/curso')
 
+
+@app.route('/matricula')
+def listar_matriculas():
+    dao = MatriculaDAO()
+    lista = dao.listar()
+    return render_template('matricula/lista_matricula.html',lista=lista)
+
+
+@app.route('/matricula/form')
+def form_matricula():
+    dao = MatriculaDAO()
+    alunos = dao.listar_alunos()
+    turmas = dao.listar_turmas()
+    return render_template('matricula/form.html',matricula=None,alunos=alunos,turmas=turmas)
+
+@app.route('/matricula/salvar/', methods=['POST'])
+@app.route('/matricula/salvar/<int:id>', methods=['POST'])
+def salvar_matricula(id=None):
+    aluno_id = request.form['aluno_id']
+    turma_id = request.form['turma_id']
+    dao = MatriculaDAO()
+    resultado = dao.salvar(id, aluno_id, turma_id)
+    if resultado["status"] == "ok":
+        flash("Matrícula salva com sucesso!", "success")
+    else:
+        flash(resultado["mensagem"], "danger")
+    return redirect('/matricula')
+
+@app.route('/matricula/editar/<int:id>')
+def editar_matricula(id):
+    dao = MatriculaDAO()
+    matricula = dao.buscar_por_id(id)
+    alunos = dao.listar_alunos()
+    turmas = dao.listar_turmas()
+    if matricula is None:
+        flash("Matrícula não encontrada!", "danger")
+        return redirect('/matricula')
+    return render_template('matricula/form.html',matricula=matricula,alunos=alunos,turmas=turmas)
+
+@app.route('/matricula/remover/<int:id>')
+def remover_matricula(id):
+    dao = MatriculaDAO()
+    resultado = dao.remover(id)
+    if resultado["status"] == "ok":
+        flash("Matrícula removida com sucesso!", "success")
+    else:
+        flash(resultado["mensagem"], "danger")
+    return redirect('/matricula')
 
 
 @app.route('/contato')

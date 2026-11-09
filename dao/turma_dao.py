@@ -39,6 +39,7 @@ class TurmaDAO:
         turma = cursor.fetchone()
         conn.close()
         return turma
+
     def remover(self, id):
         conn = get_connection()
         cursor = conn.cursor()
