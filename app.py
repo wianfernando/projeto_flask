@@ -250,6 +250,14 @@ def listar_matriculas():
     return render_template('matricula/lista_matricula.html',lista=lista)
 
 
+
+@app.route('/matricula')
+def listar_matriculas():
+    dao = MatriculaDAO()
+    lista = dao.listar()
+    return render_template('matricula/lista_matricula.html', lista=lista)
+
+
 @app.route('/matricula/form')
 def form_matricula():
     dao = MatriculaDAO()
@@ -270,15 +278,16 @@ def salvar_matricula(id=None):
         flash(resultado["mensagem"], "danger")
     return redirect('/matricula')
 
+
 @app.route('/matricula/editar/<int:id>')
 def editar_matricula(id):
     dao = MatriculaDAO()
     matricula = dao.buscar_por_id(id)
-    alunos = dao.listar_alunos()
-    turmas = dao.listar_turmas()
     if matricula is None:
         flash("Matrícula não encontrada!", "danger")
         return redirect('/matricula')
+        alunos = dao.listar_alunos()
+        turmas = dao.listar_turmas()
     return render_template('matricula/form.html',matricula=matricula,alunos=alunos,turmas=turmas)
 
 @app.route('/matricula/remover/<int:id>')
@@ -290,6 +299,7 @@ def remover_matricula(id):
     else:
         flash(resultado["mensagem"], "danger")
     return redirect('/matricula')
+
 
 
 @app.route('/contato')
