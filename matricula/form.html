@@ -5,32 +5,38 @@
 
 <div class="row">
     <div class="col-12">
-        
+
         <form action="{{ url_for('salvar_matricula', id=matricula[0]) if matricula else url_for('salvar_matricula') }}" method="POST">
 
             <div class="mb-3">
                 <label for="aluno_id" class="form-label">Aluno</label>
+
                 <select class="form-select" id="aluno_id" name="aluno_id" required>
                     <option value="">Selecione o aluno</option>
+
                     {% for aluno in alunos %}
                     <option value="{{ aluno[0] }}"
-                           {% if matricula and matricula[1] = aluno[0] %}selected{% endif %}>
+                        {% if matricula and matricula[1] == aluno[0] %}selected{% endif %}>
                         {{ aluno[1] }}
                     </option>
                     {% endfor %}
+
                 </select>
             </div>
 
             <div class="mb-3">
                 <label for="turma_id" class="form-label">Turma</label>
+
                 <select class="form-select" id="turma_id" name="turma_id" required>
                     <option value="">Selecione a turma</option>
-                    {% for aluno in alunos %}
-                    <option value="{{ aluno[0] }}"
-                    {% if matricula and matricula[1] == aluno[0] %}selected{% endif %}>
-                    {{ aluno[1] }}
-                </option>
-{% endfor %}
+
+                    {% for turma in turmas %}
+                    <option value="{{ turma[0] }}"
+                        {% if matricula and matricula[2] == turma[0] %}selected{% endif %}>
+                        {{ turma[1] }} - {{ turma[2] }} - {{ turma[3] }} - {{ turma[4] }}
+                    </option>
+                    {% endfor %}
+
                 </select>
             </div>
 
@@ -40,6 +46,7 @@
             </div>
 
         </form>
+
     </div>
 </div>
 
